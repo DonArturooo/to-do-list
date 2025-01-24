@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatList, MatListItem} from "@angular/material/list";
-import {MatInput, MatSuffix} from "@angular/material/input";
+import {MatFormField, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {ToDoListEntryComponent} from "../../components/to-do-list-entry/to-do-list-entry.component";
+import {Store} from "@ngrx/store";
+import { LetDirective } from '@ngrx/component';
+import {toDoListActions} from "../../store/to-do-list.actions";
+import {toDoListFeature} from "../../store/to-do-list.reducer";
 
 @Component({
   selector: 'app-to-do-list',
@@ -19,13 +24,28 @@ import {MatIconButton} from "@angular/material/button";
     FormsModule,
     MatIcon,
     MatSuffix,
-    MatIconButton
+    MatIconButton,
+    MatButton,
+    MatFormField,
+    MatLabel,
+    ToDoListEntryComponent,
+    LetDirective,
   ],
   templateUrl: './to-do-list.component.html',
   styleUrl: './to-do-list.component.scss'
 })
-export class ToDoListComponent {
-  tasks = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+export class ToDoListComponent{
+  value = '';
 
-  value = 'Clear me';
+  private readonly store = inject(Store);
+
+  tasks$ = this.store.select(toDoListFeature.selectTasks);
+
+  addTaskToList() {
+    this.store.dispatch(toDoListActions.addTask({task: this.value}))
+  }
+
+  constructor() {
+    this.store.select(toDoListFeature.selectToDoListState).subscribe(state => console.log(state))
+  }
 }

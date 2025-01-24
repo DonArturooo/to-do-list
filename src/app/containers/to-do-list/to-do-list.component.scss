@@ -4,16 +4,25 @@
   max-width: 100%;
 }
 
-input, button span {
-  font-size: 16px;
+mat-form-field {
+  width: 80%;
+  margin: auto;
+  display: block;
 }
 
 mat-card {
   margin: 10px auto;
   max-width: 50%;
   border: 1px dashed blueviolet;
+  text-align: center;
 }
 
 mat-card-header {
   color: blue;
+  margin: auto;
+}
+
+mat-list-item {
+  display: block;
+  margin-top: 10px;
 }
