@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatFormField, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
@@ -34,7 +34,7 @@ import {toDoListFeature} from "../../store/to-do-list.reducer";
   templateUrl: './to-do-list.component.html',
   styleUrl: './to-do-list.component.scss'
 })
-export class ToDoListComponent{
+export class ToDoListComponent implements OnInit{
   value = '';
 
   private readonly store = inject(Store);
@@ -45,7 +45,7 @@ export class ToDoListComponent{
     this.store.dispatch(toDoListActions.addTask({task: this.value}))
   }
 
-  constructor() {
-    this.store.select(toDoListFeature.selectToDoListState).subscribe(state => console.log(state))
+  public ngOnInit() {
+    this.store.dispatch(toDoListActions.fetchTasksFromCache())
   }
 }
