@@ -1,5 +1,5 @@
 <mat-form-field>
-  <input [id]="'taskTrash'" matInput type="text" placeholder="placeholder" [value]="task.name" [disabled]="true">
+  <input matInput type="text" [value]="task.name" [disabled]="true">
 
   <button matSuffix mat-icon-button aria-label="Clear" (click)="removeTask()">
     <mat-icon>close</mat-icon>
